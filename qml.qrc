@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>ControlPanel.qml</file>
+        <file>MultiButton.qml</file>
+        <file>VentGraphicViewPressure.qml</file>
+        <file>VentGraphicViewFlow.qml</file>
+        <file>VentParamView.qml</file>
+        <file>ParamItem.qml</file>
+        <file>VentGraphicViewVolumn.qml</file>
+    </qresource>
+</RCC>
