@@ -14,11 +14,11 @@ A Ventilator is a medical device that plays an important role in emergency and h
 
 ## Technical specification
 
-Block Diagram
+### Block Diagram
 
 ![alt Diagram](https://raw.githubusercontent.com/OpenVentVN/monitor/master/doc/diagram.png)
 
-Screenshot
+### Screenshot
 
 ![alt Screenshot](https://raw.githubusercontent.com/OpenVentVN/monitor/master/doc/screenshot1.png)
 
