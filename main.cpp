@@ -11,6 +11,8 @@
 #include "datasource.h"
 #include "datasink.h"
 #include "sampledatasource.h"
+#include "serialdatasource.h"
+#include "datasinkserial.h"
 
 
 int main(int argc, char *argv[])
@@ -30,12 +32,20 @@ int main(int argc, char *argv[])
     viewer.rootContext()->setContextProperty("dataSource", &dataSource);
 
     SampleDataSource sample;
-    DataSink sink(&sample, &dataSource);
+    SerialDataSource serialData;
+
+//    DataSink sink(&sample, &dataSource);
+    DataSinkSerial sinkSerial(&serialData, &dataSource);
+
+
 
     viewer.setSource(QUrl("qrc:/main.qml"));
     viewer.setResizeMode(QQuickView::SizeRootObjectToView);
     viewer.setColor(QColor("#404040"));
-    viewer.showFullScreen();
+    viewer.setWidth(800);
+    viewer.setHeight(480);
+    viewer.show();
+//    viewer.showFullScreen();
     // viewer.showMaximized();
 
     return app.exec();

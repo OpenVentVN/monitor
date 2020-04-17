@@ -9,6 +9,8 @@ import QtCharts 2.1
 ChartView {
     id: flowChartView
     theme: ChartView.ChartThemeDark
+    width: 600
+    height: 400
     property bool openGL: true
     property bool openGLSupported: true
     property string serieName: "Volumn"

@@ -58,7 +58,7 @@ SampleDataSource::SampleDataSource()
     _internalVolumnCounter = 0;
 
 
-    QFile inputFile("/home/compiler/openvent/Software/OVentControl/OventMonitor/data/TEST_V800T1000F15.txt");
+    QFile inputFile("://data/TEST_V800T1000F15.txt");
 
     if (inputFile.open(QIODevice::ReadOnly))
     {

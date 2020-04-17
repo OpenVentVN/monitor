@@ -1,16 +1,26 @@
-QT += charts qml quick virtualkeyboard serialport
+QT += charts qml quick serialport
+
+static {
+    QT += svg
+    QTPLUGIN += qtvirtualkeyboardplugin
+}
 
 CONFIG += c++11
 DEFINES += QT_DEPRECATED_WARNINGS
 
+INCLUDEPATH +=  data \
+
 SOURCES += \
         datasink.cpp \
+        datasinkserial.cpp \
         datasource.cpp \
         main.cpp \
         sampledatasource.cpp \
-        serialdatasource.cpp
+        serialdatasource.cpp \
+        serialportinfor.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += qml.qrc \
+    dataFile.qrc
 
 QML_IMPORT_PATH =
 QML_DESIGNER_IMPORT_PATH =
@@ -22,8 +32,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     datasink.h \
+    datasinkserial.h \
     datasource.h \
     sampledatasource.h \
-    serialdatasource.h
+    serialdatasource.h \
+    serialportinfor.h
 
 DISTFILES +=

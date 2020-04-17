@@ -4,7 +4,7 @@
 #include <QtQuick/QQuickView>
 #include <QtQuick/QQuickItem>
 #include <QtCore/QDebug>
-#include <QtCore/QRandomGenerator>
+//#include <QtCore/QRandomGenerator>
 #include <QtCore/QtMath>
 
 QT_CHARTS_USE_NAMESPACE

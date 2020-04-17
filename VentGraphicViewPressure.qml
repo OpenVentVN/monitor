@@ -9,13 +9,15 @@ import QtCharts 2.1
 //![1]
 ChartView {
     id: pressureChartView
+    width: 650
+    height: 400
     theme: ChartView.ChartThemeDark
     property string serieName: "Pressure"
 
     ValueAxis {
         id: axisY1
-        min: -10
-        max: 40
+        min: -20
+        max: 30
         tickCount: 6
     }
 
