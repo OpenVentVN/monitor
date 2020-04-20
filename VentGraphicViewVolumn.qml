@@ -29,7 +29,7 @@ ChartView {
         max: 15
 
         gridVisible:false
-        tickCount: 16
+        tickCount: 8
     }
 
     SplineSeries {

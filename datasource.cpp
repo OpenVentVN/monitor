@@ -26,9 +26,17 @@ DataSource::DataSource(QQuickView *appViewer, QObject *parent) :
 void DataSource::addPressureData(QPointF pP)
 {
     QMutexLocker locker(&this->_mutex);
-    if (this->m_pressureData.count() >= 150)
+    if (this->m_pressureData.count() >= 150){
+        this->m_pressureDataTmp = this->m_pressureData;
         this->m_pressureData.clear();
 
+        for(int i = 1 ; i< this->m_pressureDataTmp.count(); i++){
+            QPointF pointtmp;
+            pointtmp.setX(this->m_pressureDataTmp.at(i).x() - 0.1);
+            pointtmp.setY(this->m_pressureDataTmp.at(i).y());
+            m_pressureData.push_back(pointtmp);
+        }
+    }
     m_pressureData.push_back(pP);
 }
 

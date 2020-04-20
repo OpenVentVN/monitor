@@ -8,5 +8,6 @@
         <file>VentParamView.qml</file>
         <file>ParamItem.qml</file>
         <file>VentGraphicViewVolumn.qml</file>
+        <file>PatientInfo.qml</file>
     </qresource>
 </RCC>

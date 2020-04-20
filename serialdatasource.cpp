@@ -9,7 +9,12 @@ SerialDataSource::SerialDataSource()
     _pressure_data_y = 0;
 
     m_serial_port = new QSerialPort(this);
+    enumerator = new QextSerialEnumerator(this);
+    enumerator->setUpNotifications();
+
     connect(m_serial_port,SIGNAL(readyRead()), this, SLOT(readData()));
+    connect(enumerator, SIGNAL(deviceDiscovered(QextPortInfo)), SLOT(portAddedRemoved()));
+    connect(enumerator, SIGNAL(deviceRemoved(QextPortInfo)), SLOT(portAddedRemoved()));
 
     fillSerialPortInfo();
     updateComportSettings("ttyUSB0");
@@ -63,15 +68,15 @@ void SerialDataSource::readData()
 
 QPointF SerialDataSource::getPressureData()
 {
-    _pressure_data_x += 0.05;
-    if(_pressure_data_x > 15) _pressure_data_x = 0;
+    _pressure_data_x += 0.1;
+    if(_pressure_data_x > 15) _pressure_data_x = 15;
     return QPointF(_pressure_data_x,_pressure_data_y);
 }
 
 QPointF SerialDataSource::getVolumnData()
 {
-    _pressure_data_x += 0.05;
-    if(_pressure_data_x > 15) _pressure_data_x = 0;
+//    _pressure_data_x +=  0.05;
+//    if(_pressure_data_x > 15) _pressure_data_x = 15;
     return QPointF(_pressure_data_x,_pressure_data_y);
 }
 
@@ -117,4 +122,17 @@ void SerialDataSource::fillSerialPortInfo()
     for(int i = 0; i < m_serial_port_info.size(); i++){
         qDebug() << "serial device " <<m_serial_port_info.at(i)->portName;
     }
+}
+
+void SerialDataSource::portAddedRemoved()
+{
+    if(m_serial_port->isOpen()) {
+        m_serial_port->close();
+    }
+
+    fillSerialPortInfo();
+
+    //emit signal port add or removed to do something
+    updateComportSettings("ttyUSB0");
+    openCloseComport();
 }

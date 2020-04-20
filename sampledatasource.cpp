@@ -133,7 +133,7 @@ QPointF SampleDataSource::getPressureData()
 
 
     if (_internalPressureCounter >= 150)
-        _internalPressureCounter = 0;
+        _internalPressureCounter = 150;
 
     return pressureSensorData.at(_internalPressureCounter++);
 

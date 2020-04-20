@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import QtCharts 2.1
+import QtCharts 2.0
 
 /*
  Chart 1: Pressure monitor
@@ -12,12 +12,14 @@ ChartView {
     width: 650
     height: 400
     theme: ChartView.ChartThemeDark
+    antialiasing: true
+
     property string serieName: "Pressure"
 
     ValueAxis {
         id: axisY1
-        min: -20
-        max: 30
+        min: -10
+        max: 40
         tickCount: 6
     }
 
@@ -27,16 +29,16 @@ ChartView {
         max: 15
 
         gridVisible:false
-        tickCount: 16
+        tickCount: 6
     }
 
     SplineSeries {
         id: pressureSeries
         name: "Pressure"
+//        axisX: axisX
         axisX: axisX
         axisY: axisY1
         useOpenGL: true
-
         width: 5
         color: "#FFFFFF"
     }

@@ -8,6 +8,8 @@
 #include <QList>
 #include <QSerialPortInfo>
 
+#include "qextserialenumerator.h"
+
 class SerialDataSource : public QObject
 {
     Q_OBJECT
@@ -31,11 +33,15 @@ private slots:
     int         getTotalPortsCount();
     void        updateComportSettings(QString portname_str);
     void        fillSerialPortInfo();
+    void        portAddedRemoved();
+
 
 
 
 private:
     QSerialPort *m_serial_port;
+    QextSerialEnumerator *enumerator;
+
     QList<serialPortInfor *> m_serial_port_info;
     QByteArray m_buffer;
 

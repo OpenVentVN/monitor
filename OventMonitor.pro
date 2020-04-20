@@ -8,6 +8,11 @@ static {
 CONFIG += c++11
 DEFINES += QT_DEPRECATED_WARNINGS
 
+INCLUDEPATH += $$PWD/lib
+LIBS += -L/usr/lib -ludev
+include(thirdParty/qextserialport/src/qextserialport.pri)
+
+
 INCLUDEPATH +=  data \
 
 SOURCES += \
