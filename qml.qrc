@@ -9,5 +9,67 @@
         <file>ParamItem.qml</file>
         <file>VentGraphicViewVolumn.qml</file>
         <file>PatientInfo.qml</file>
+        <file>HomeView.qml</file>
+        <file>InfoButton.qml</file>
+        <file>PatientInforLabel.qml</file>
+        <file>ModeButton.qml</file>
+        <file>images/btnedit-_hover.png</file>
+        <file>images/btnedit-_hover@2x.png</file>
+        <file>images/btnedit-_hover@3x.png</file>
+        <file>images/btnedit+_hover.png</file>
+        <file>images/btnedit+_hover@2x.png</file>
+        <file>images/btnedit+_hover@3x.png</file>
+        <file>images/btnedit-_normal.png</file>
+        <file>images/btnedit-_normal@2x.png</file>
+        <file>images/btnedit-_normal@3x.png</file>
+        <file>images/btnedit+_normal.png</file>
+        <file>images/btnedit+_normal@2x.png</file>
+        <file>images/btnedit+_normal@3x.png</file>
+        <file>images/btn_hover.png</file>
+        <file>images/btn_hover@2x.png</file>
+        <file>images/btn_hover@3x.png</file>
+        <file>images/btn_normal.png</file>
+        <file>images/btn_normal@2x.png</file>
+        <file>images/btn_normal@3x.png</file>
+        <file>images/close_hover.png</file>
+        <file>images/close_hover@2x.png</file>
+        <file>images/close_hover@3x.png</file>
+        <file>images/close_normal.png</file>
+        <file>images/close_normal@2x.png</file>
+        <file>images/close_normal@3x.png</file>
+        <file>images/icon_female.png</file>
+        <file>images/icon_female@2x.png</file>
+        <file>images/icon_female@3x.png</file>
+        <file>images/icon_female_white.png</file>
+        <file>images/icon_female_white@2x.png</file>
+        <file>images/icon_female_white@3x.png</file>
+        <file>images/icon-_hover.png</file>
+        <file>images/icon-_hover@2x.png</file>
+        <file>images/icon-_hover@3x.png</file>
+        <file>images/icon+_hover.png</file>
+        <file>images/icon+_hover@2x.png</file>
+        <file>images/icon+_hover@3x.png</file>
+        <file>images/icon_male.png</file>
+        <file>images/icon_male@2x.png</file>
+        <file>images/icon_male@3x.png</file>
+        <file>images/icon_male_white.png</file>
+        <file>images/icon_male_white@2x.png</file>
+        <file>images/icon_male_white@3x.png</file>
+        <file>images/icon-_normal.png</file>
+        <file>images/icon-_normal @2x.png</file>
+        <file>images/icon-_normal @3x.png</file>
+        <file>images/icon+_normal.png</file>
+        <file>images/icon+_normal@2x.png</file>
+        <file>images/icon+_normal@3x.png</file>
+        <file>images/icon_triangle.png</file>
+        <file>images/icon_triangle@2x.png</file>
+        <file>images/icon_triangle@3x.png</file>
+        <file>images/mode.png</file>
+        <file>images/mode@2x.png</file>
+        <file>images/mode@3x.png</file>
+        <file>images/mode_hover.png</file>
+        <file>images/mode_hover@2x.png</file>
+        <file>images/mode_hover@3x.png</file>
+        <file>StartButton.qml</file>
     </qresource>
 </RCC>
