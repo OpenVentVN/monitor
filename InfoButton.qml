@@ -34,8 +34,10 @@ Rectangle {
         id: textLeft
         text: valueLeft
         anchors.left: parent.left
-        anchors.leftMargin: 5
+        anchors.leftMargin: 3
         font.pixelSize: 14
+        anchors.top: parent.top
+        anchors.topMargin: 3
         color: "white"
     }
 
@@ -43,9 +45,9 @@ Rectangle {
         id: textRight
         text: valueRight
         anchors.right: parent.right
-        anchors.rightMargin: 5
+        anchors.rightMargin: 3
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 5
+        anchors.bottomMargin: 3
         font.pixelSize: 14
         color: "white"
     }
@@ -54,10 +56,10 @@ Rectangle {
         id: textti
         text: "I/E = 1:2"
         anchors.left: parent.left
-        anchors.leftMargin: 5
+        anchors.leftMargin: 3
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 5
-        font.pixelSize: 13
+        anchors.bottomMargin: 3
+        font.pixelSize: 12
         color: "white"
         visible: textLeft.text == "Ti"? true:false
     }
