@@ -8,7 +8,7 @@
         <file>VentParamView.qml</file>
         <file>ParamItem.qml</file>
         <file>VentGraphicViewVolumn.qml</file>
-        <file>PatientInfo.qml</file>
+        <file>PatientInfoInput.qml</file>
         <file>HomeView.qml</file>
         <file>InfoButton.qml</file>
         <file>PatientInforLabel.qml</file>
@@ -71,5 +71,13 @@
         <file>images/mode_hover@2x.png</file>
         <file>images/mode_hover@3x.png</file>
         <file>StartButton.qml</file>
+        <file>ConfigPopup.qml</file>
+        <file>SliderConfig.qml</file>
+        <file>images/icon_triangle_hover.png</file>
+        <file>ImageButtonEdit.qml</file>
+        <file>FlatButton.qml</file>
+        <file>PaperShadow.qml</file>
+        <file>PaperRipple.qml</file>
+        <file>PatientInfoPopup.qml</file>
     </qresource>
 </RCC>

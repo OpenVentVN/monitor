@@ -8,11 +8,11 @@ Rectangle {
     Rectangle{
         id: recInfor
         color: "black"
-        width: 740
-        height: 353
+        width: 780 //740
+        height: 373//353
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top;
-        anchors.topMargin: 30
+        anchors.topMargin: 10//30
     }
 
     VentGraphicViewPressure {
@@ -53,30 +53,60 @@ Rectangle {
             valueCenter: "500"
             valueLeft: "VT"
             valueRight: "ml"
+            buttonID: 1
+            lowLimit: 200
+            upLimit: 800
+            stepConfig: 10
         }
         InfoButton{
             id: iebutton
-            valueCenter: "1:2"
-            valueLeft: "I/E"
-            valueRight: ""
+            valueCenter: "1"
+            valueLeft: "Ti"
+            valueRight: "s"
+            buttonID: 2
+            lowLimit: 0.5
+            upLimit: 2
+            stepConfig: 0.1
         }
         InfoButton{
             id: fbutton
             valueCenter: "20"
             valueLeft: "F"
             valueRight: "bpm"
+            buttonID: 3
+            lowLimit: 5
+            upLimit: 40
+            stepConfig: 1
         }
         InfoButton{
             id: peepbutton
             valueCenter: "10"
             valueLeft: "PEEP"
             valueRight: "cmH2O"
+            buttonID: 4
+            lowLimit: 5
+            upLimit: 20
+            stepConfig: 1
         }
         InfoButton{
             id: pipbutton
             valueCenter: "21"
             valueLeft: "PIP"
             valueRight: "%"
+            buttonID: 5
+            lowLimit: 20
+            upLimit: 40
+            stepConfig: 1
+        }
+        InfoButton{
+            id: supbutton
+            valueCenter: "10"
+            valueLeft: "SUP"
+            valueRight: "%"
+            buttonID: 6
+            lowLimit: 0
+            upLimit: 100
+            stepConfig: 10
         }
     }
 
@@ -85,6 +115,8 @@ Rectangle {
         spacing: 40
         anchors.left: parent.left; anchors.leftMargin: 30
         anchors.bottom: parent.bottom; anchors.bottomMargin: 26
+//        anchors.left: columbtinfo.right
+//        anchors.leftMargin: 30
 
         ModeButton{
             id: cmvbutton

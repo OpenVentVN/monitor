@@ -12,8 +12,6 @@ Rectangle {
     property string patientHigh: "_ _"
     property string patientWeight: "_ _"
 
-
-
     Row{
         anchors.horizontalCenter: parent.horizontalCenter
         spacing: 20
@@ -58,7 +56,12 @@ Rectangle {
             color: "#4a4a4a"
             width: 60
         }
-
     }
 
+   MouseArea{
+       anchors.fill: parent
+       onClicked: {
+//           pupatient.open()
+       }
+   }
 }

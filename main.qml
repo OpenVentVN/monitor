@@ -13,9 +13,21 @@ Item {
     Material.theme: Material.Dark
     Material.accent: Material.Purple
 
+    signal s_config_changed(int _id, double _value)
+    signal s_updated_ie_param_flag()
+    signal s_updated_ie_param_start(int _f)
+
     HomeView{
         id: homepage
         anchors.fill: parent
+    }
+
+    ConfigPopup{
+        id: puconfig
+    }
+
+    PatientInfoPopup{
+        id: pupatient
     }
 
 }
