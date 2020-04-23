@@ -10,6 +10,8 @@ Rectangle {
     color: "#323132"
     border.width: 1
     property alias title: titleText.text
+    property alias patientInfor: textname.text
+
 
     Text {
         id: titleText
@@ -20,6 +22,31 @@ Rectangle {
         anchors.leftMargin: 17
         anchors.top: parent.top
         anchors.topMargin: 8
+    }
+    TextField{
+        id: textname
+        color: "white"
+        width: parent.width - 10*2
+        font.pixelSize: 18
+        anchors.left: parent.left
+        anchors.leftMargin: 10
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 9
+        background: Rectangle{
+            anchors.fill: parent
+            color: "transparent"
+            Rectangle{
+                width: parent.width - 10
+                height: 1
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 1
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                color: textname.focus? "#00C853":"white"
+            }
+
+        }
+
     }
 }
 

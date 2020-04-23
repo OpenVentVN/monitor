@@ -6,11 +6,12 @@ Rectangle {
     height: 40
     color: "white"
 
-    property string patientName: "_ _ _ _ _ _ _ _ _ _"
-    property string patientGender: "_ _"
-    property string patientAge: "_ _"
-    property string patientHigh: "_ _"
-    property string patientWeight: "_ _"
+    property string patientFistName: ""
+    property string patientLastName: ""
+    property bool   patientGender: true
+    property string patientAge: ""
+    property string patientHigh: ""
+    property string patientWeight: ""
 
     Row{
         anchors.horizontalCenter: parent.horizontalCenter
@@ -18,7 +19,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         Text {
             id: textName
-            text: patientName == ""? "_ _ _ _ _ _ _ _ _ _": patientName
+            text: patientFistName == ""? "_ _ _ _ _ _ _ _ _ _": patientLastName+ " "+patientFistName
             font.pixelSize: 18
             color: "#4a4a4a"
             width: 200
@@ -27,7 +28,7 @@ Rectangle {
 
         Text {
             id: textGender
-            text: patientGender == ""? "_ _" : patientGender
+            text: patientFistName == ""? "":patientGender? "Male" : "Female"
             font.pixelSize: 18
             color: "#4a4a4a"
             width: 60
@@ -61,7 +62,25 @@ Rectangle {
    MouseArea{
        anchors.fill: parent
        onClicked: {
-//           pupatient.open()
+           pupatient.patientFistName = patientFistName
+           pupatient.patientLastName = patientLastName
+           pupatient.patientAge = patientAge
+           pupatient.patientGender = patientGender
+           pupatient.patientHigh = patientHigh
+           pupatient.patientWeight = patientWeight
+           pupatient.open()
+       }
+   }
+   Connections{
+       target: main
+       onS_updated_patient_info:{
+           console.log("test signal ", _fname)
+           patientFistName = _fname
+           patientLastName = _lname
+           patientGender = _gender
+           patientAge = _age
+           patientHigh = _high
+           patientWeight = _weight
        }
    }
 }

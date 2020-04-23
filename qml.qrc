@@ -79,5 +79,8 @@
         <file>PaperShadow.qml</file>
         <file>PaperRipple.qml</file>
         <file>PatientInfoPopup.qml</file>
+        <file>GenderButton.qml</file>
+        <file>images/check_white_18dp.png</file>
+        <file>GeneralButton.qml</file>
     </qresource>
 </RCC>

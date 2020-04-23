@@ -32,11 +32,12 @@ Rectangle {
         anchors.left: columbtinfo.right
         anchors.leftMargin: 5
 
-        patientName: "Thai Quoc Chanh"
-        patientGender: "Male"
-        patientAge: "30"
-        patientHigh: "160"
-        patientWeight: "61"
+//        patientFistName: "Chanh"
+//        patientLastName: "Thai Quoc"
+//        patientGender: false
+//        patientAge: "30"
+//        patientHigh: "160"
+//        patientWeight: "61"
     }
 
     Column{
@@ -131,7 +132,7 @@ Rectangle {
         ModeButton{
             id: acbutton
             buttonStatus: false
-            buttonName: "SIMV"
+            buttonName: "SIMV+PS"
             onClicked: {
                 buttonStatus = !buttonStatus
                 cmvbutton.buttonStatus = false

@@ -16,6 +16,7 @@ Item {
     signal s_config_changed(int _id, double _value)
     signal s_updated_ie_param_flag()
     signal s_updated_ie_param_start(int _f)
+    signal s_updated_patient_info(string _fname, string _lname, bool _gender, string _age, string _high, string _weight)
 
     HomeView{
         id: homepage
