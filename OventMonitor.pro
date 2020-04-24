@@ -1,9 +1,5 @@
 QT += charts qml quick serialport
 
-static {
-    QT += svg
-    QTPLUGIN += qtvirtualkeyboardplugin
-}
 
 CONFIG += c++11
 DEFINES += QT_DEPRECATED_WARNINGS
@@ -16,6 +12,7 @@ include(thirdParty/qextserialport/src/qextserialport.pri)
 INCLUDEPATH +=  data \
 
 SOURCES += \
+        chartdatasource.cpp \
         datasink.cpp \
         datasinkserial.cpp \
         datasource.cpp \
@@ -36,6 +33,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    chartdatasource.h \
     datasink.h \
     datasinkserial.h \
     datasource.h \

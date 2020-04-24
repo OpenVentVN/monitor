@@ -83,7 +83,7 @@ Rectangle {
     }
 
     Connections{
-        target: main
+        target: mainwindown
         onS_config_changed:{
             if(buttonID == _id) valueCenter = _value.toString()
         }

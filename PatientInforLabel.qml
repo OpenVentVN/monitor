@@ -68,11 +68,11 @@ Rectangle {
            pupatient.patientGender = patientGender
            pupatient.patientHigh = patientHigh
            pupatient.patientWeight = patientWeight
-           pupatient.open()
+           pupatient.visible = true
        }
    }
    Connections{
-       target: main
+       target: mainwindown
        onS_updated_patient_info:{
            console.log("test signal ", _fname)
            patientFistName = _fname

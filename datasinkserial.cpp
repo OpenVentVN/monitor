@@ -1,6 +1,6 @@
 #include "datasinkserial.h"
 
-DataSinkSerial::DataSinkSerial(SerialDataSource *src, DataSource *target)
+DataSinkSerial::DataSinkSerial(ChartDataSource *src, DataSource *target)
         : _target(target), _source(src)
 {
     _timer = new QTimer(this);

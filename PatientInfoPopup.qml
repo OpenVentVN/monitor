@@ -1,13 +1,18 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
+import QtQuick.Controls.Styles 1.4
+import QtQuick.VirtualKeyboard 2.1
+import QtQuick.VirtualKeyboard.Settings 2.1
 
-Popup {
+Rectangle {
     id: config
-    x: (main.width - width) / 2
-    y: Math.abs(main.height - height) / 2
-    closePolicy: Popup.NoAutoClose
-    modal: true
-    focus: true
+    width: 800
+    height: 480
+//    x: (mainwindown.width - width) / 2
+//    y: Math.abs(mainwindown.height - height) / 2
+//    closePolicy: Popup.NoAutoClose
+////    modal: true
+//    focus: true
 
     property alias patientFistName: patientfistname.patientInfor
     property alias patientLastName: patientlastname.patientInfor
@@ -17,10 +22,11 @@ Popup {
     property alias patientWeight: patientweight.patientInfor
 
     Rectangle {
+        id: recinfor
         width: 800
         height: 480
         color: "black"
-        anchors.centerIn: parent
+//        anchors.centerIn: parent
 
         Text {
             text: "PATIENT CONDITION"
@@ -59,6 +65,9 @@ Popup {
             anchors.top: rowname.bottom
             anchors.topMargin: 30
             patientInfor: patientAge
+            onPatientFocusChanged: {
+                if(patientFocus) recinfor.y = -50
+            }
 
         }
         Row {
@@ -112,6 +121,9 @@ Popup {
                 title: "Height (cm)"
                 width: 265
                 patientInfor: patientHigh
+                onPatientFocusChanged: {
+                    if(patientFocus) recinfor.y = -150
+                }
 
             }
             PatientInfoInput{
@@ -119,6 +131,9 @@ Popup {
                 title: "Weight (kg)"
                 width: 265
                 patientInfor: patientWeight
+                onPatientFocusChanged: {
+                    if(patientFocus) recinfor.y = -150
+                }
 
             }
         }
@@ -134,21 +149,66 @@ Popup {
                 width: (rowbt.width - rowbt.spacing)/3
                 text: "Close"
                 color: "#757575"
-                onClicked: pupatient.close()
+                onClicked: pupatient.visible = false
             }
             GeneralButton{
                 width: (rowbt.width - rowbt.spacing)*2/3
                 text: "Update"
                 onClicked: {
                     s_updated_patient_info(patientFistName,patientLastName,patientGender,patientAge,patientHigh,patientWeight)
-                    pupatient.close()
+                    pupatient.visible = false
                 }
             }
 
         }
-
-
-
     }
+        InputPanel {
+            id: inputPanel
+            z: 99
+            y: mainwindown.height
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width
+//            parent: mainwindown.overlay
+
+            states: State {
+                name: "visible"
+                /*  The visibility of the InputPanel can be bound to the Qt.inputMethod.visible property,
+                    but then the handwriting input panel and the keyboard input panel can be visible
+                    at the same time. Here the visibility is bound to InputPanel.active property instead,
+                    which allows the handwriting panel to control the visibility when necessary.
+                */
+                when: inputPanel.active
+                PropertyChanges {
+                    target: inputPanel
+                    y: mainwindown.height - inputPanel.height
+                }
+            }
+            transitions: Transition {
+                from: ""
+                to: "visible"
+                reversible: true
+                ParallelAnimation {
+                    NumberAnimation {
+                        properties: "y"
+                        duration: 250
+                        easing.type: Easing.InOutQuad
+                    }
+                }
+            }
+            onActiveChanged: {
+                if(active){
+//                    recinfor.y = 0
+    //                keyboard_visible = true
+
+                }
+                else {
+                    recinfor.y = 0
+//                    keyboard_visible = false
+                }
+            }
+        }
+
+
+
 }
 

@@ -7,6 +7,8 @@ SerialDataSource::SerialDataSource()
 {
     _pressure_data_x = 0;
     _pressure_data_y = 0;
+    _tran_id = 1;
+    _run_on_start = true;
 
     m_serial_port = new QSerialPort(this);
     enumerator = new QextSerialEnumerator(this);
@@ -17,8 +19,10 @@ SerialDataSource::SerialDataSource()
     connect(enumerator, SIGNAL(deviceRemoved(QextPortInfo)), SLOT(portAddedRemoved()));
 
     fillSerialPortInfo();
-    updateComportSettings("ttyUSB0");
-    openCloseComport();
+    updatePortStatus(false);
+
+//    updateComportSettings("ttyUSB0");
+//    openCloseComport();
 }
 
 void SerialDataSource::processLine(const QByteArray &line)
@@ -30,7 +34,11 @@ void SerialDataSource::processLine(const QByteArray &line)
     data_process = data_sensor.split(',');
 
     if(data_process.size() == 5){
-        _pressure_data_y =  data_process.at(3).toLong() ;
+        emit m_update_data_pressure(data_process.at(3).toLong());
+        if(_run_on_start){
+            emit m_type_uart_sensor();
+        }
+//        _pressure_data_y =  data_process.at(3).toLong() ;
     }
 
 
@@ -59,6 +67,8 @@ void SerialDataSource::openCloseComport()
             qDebug() << "serial disconnected";
         }
     }
+    updatePortStatus(m_serial_port->isOpen());
+
 }
 
 void SerialDataSource::readData()
@@ -80,16 +90,89 @@ QPointF SerialDataSource::getVolumnData()
     return QPointF(_pressure_data_x,_pressure_data_y);
 }
 
+void SerialDataSource::startStopVent(bool _stt)
+{
+    qDebug() << "startStopVent " << _stt;
+    if(_stt){
+        unsigned char functionID = 101;
+        unsigned char packet_start_tmp[]= {0x01,functionID,_tran_id,0x00,0x00};
+        unsigned short crc = crc16(packet_start_tmp, sizeof (packet_start_tmp));
+        unsigned char crchi = crc >> 8;
+        unsigned char crclo = crc;
+        unsigned char packet_start[]= {0x01,functionID,_tran_id,0x00,0x00,crchi,crclo};
+        m_serial_port->write(QByteArray((char *) packet_start,sizeof (packet_start)));
+//        writeDataToSerial(packet_start);
+    }
+    else{
+        unsigned char functionID = 102;
+        unsigned char packet_stop_tmp[]= {0x01,functionID,_tran_id,0x00,0x00};
+        unsigned short crc = crc16(packet_stop_tmp, sizeof (packet_stop_tmp));
+        unsigned char crchi = crc >> 8;
+        unsigned char crclo = crc;
+        unsigned char packet_stop[]= {0x01,functionID,_tran_id,0x00,0x00,crchi,crclo};
+        m_serial_port->write(QByteArray((char *) packet_stop,sizeof (packet_stop)));
+
+//        writeDataToSerial(packet_stop);
+
+    }
+    _tran_id ++;
+    if(_tran_id == 0) _tran_id = 1;
+}
+
+void SerialDataSource::readParameter()
+{
+    unsigned char functionID = 103;
+    unsigned char packet_tmp[]= {0x01,functionID,_tran_id,0x00,0x00};
+    unsigned short crc = crc16(packet_tmp, sizeof (packet_tmp));
+    unsigned char crchi = crc >> 8;
+    unsigned char crclo = crc;
+    unsigned char packet[]= {0x01,functionID,_tran_id,0x00,0x00,crchi,crclo};
+    m_serial_port->write(QByteArray((char *) packet,sizeof (packet)));
+
+//    writeDataToSerial(packet);
+    _tran_id ++;
+    if(_tran_id == 0) _tran_id = 1;
+}
+
+void SerialDataSource::writeParameter(unsigned char _mode, int _vt, int _ti, unsigned char _f, unsigned char _peep,
+                                      unsigned char _pip, unsigned char _ps)
+{
+    qDebug() << _mode << _vt << _ti << _f << _peep << _pip << _ps;
+    unsigned char vthi = _vt >> 8;
+    unsigned char vtlo = _vt;
+
+    unsigned char tihi = _ti >> 8;
+    unsigned char tilo = _ti;
+
+    unsigned char functionID = 104;
+    unsigned char packet_tmp[]= {0x01,functionID,_tran_id,0x00,0x09,_mode,vthi,vtlo,tihi,tilo,_f,_peep,_pip,_ps};
+    unsigned short crc = crc16(packet_tmp, sizeof (packet_tmp));
+    unsigned char crchi = crc >> 8;
+    unsigned char crclo = crc;
+    unsigned char packet[]= {0x01,functionID,_tran_id,0x00,0x09,_mode,vthi,vtlo,tihi,tilo,_f,_peep,_pip,_ps,crchi,crclo};
+    m_serial_port->write(QByteArray((char *) packet,sizeof (packet)));
+
+//    writeDataToSerial(packet);
+    _tran_id ++;
+    if(_tran_id == 0) _tran_id = 1;
+}
+
 QString SerialDataSource::getPortName(int idx)
 {
     QString temp_str;
     if(idx < m_serial_port_info.size()){
         temp_str = m_serial_port_info.at(idx)->portName;
         temp_str.remove("/dev/");
-        return temp_str;
+        if(temp_str.mid(0,6) == "ttyUSB") return temp_str;
+        else return "NA";
     }
 
     else {return "NA";}
+}
+
+bool SerialDataSource::isConnected() const
+{
+    return _connection_state;
 }
 
 int SerialDataSource::getTotalPortsCount()
@@ -120,7 +203,7 @@ void SerialDataSource::fillSerialPortInfo()
          _selected_port_name = m_serial_port_info.at(0)->portName; // get the latest port
     }
     for(int i = 0; i < m_serial_port_info.size(); i++){
-        qDebug() << "serial device " <<m_serial_port_info.at(i)->portName;
+//        qDebug() << "serial device " <<m_serial_port_info.at(i)->portName;
     }
 }
 
@@ -131,8 +214,49 @@ void SerialDataSource::portAddedRemoved()
     }
 
     fillSerialPortInfo();
+    updatePortStatus(false);
+    emit m_is_port_list_updated_changed();
+
+
 
     //emit signal port add or removed to do something
-    updateComportSettings("ttyUSB0");
-    openCloseComport();
+//    updateComportSettings("ttyUSB0");
+    //    openCloseComport();
+}
+
+void SerialDataSource::updatePortStatus(bool connection_state)
+{
+    _connection_state = connection_state;
+    emit m_is_connected_changed(_connection_state);
+//    emit m_is_port_list_updated_changed();
+}
+
+void SerialDataSource::writeDataToSerial(unsigned char *_data)
+{
+    if(m_serial_port->isOpen()){
+        m_serial_port->write(QByteArray((char *) _data,sizeof (_data)));
+
+        qDebug () << "write data to serial port";
+    }
+    else {
+        qDebug("Serial >> Please check the connection then open the Comport");
+    }
+}
+
+unsigned short SerialDataSource::crc16(unsigned char *buffer, int buffer_length)
+{
+    unsigned char crc_hi = 0xFF; /* high CRC byte initialized */
+    unsigned char crc_lo = 0xFF; /* low CRC byte initialized */
+    unsigned int i; /* will index into CRC lookup */
+
+    /* pass through message buffer */
+    while (buffer_length--) {
+        i = crc_hi ^ *buffer++; /* calculate the CRC  */
+        crc_hi = crc_lo ^ table_crc_hi[i];
+        crc_lo = table_crc_lo[i];
+    }
+    qDebug() << "crc low " << crc_lo << "crc hi " << crc_hi;
+
+
+    return (crc_hi << 8 | crc_lo);
 }

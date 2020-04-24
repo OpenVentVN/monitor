@@ -3,8 +3,8 @@ import QtQuick.Controls 2.0
 
 Popup {
     id: config
-    x: (main.width - width) / 2
-    y: Math.abs(main.height - height) / 2
+    x: (mainwindown.width - width) / 2
+    y: Math.abs(mainwindown.height - height) / 2
     closePolicy: Popup.NoAutoClose
     modal: true
     focus: true

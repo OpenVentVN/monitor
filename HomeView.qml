@@ -4,6 +4,7 @@ Rectangle {
     width:  800
     height: 480
     color: "#262626"
+    property bool waitingComponent: false
 
     Rectangle{
         id: recInfor
@@ -58,7 +59,11 @@ Rectangle {
             lowLimit: 200
             upLimit: 800
             stepConfig: 10
+            onValueCenterChanged: {
+                if(waitingComponent) writeDataControl()
+            }
         }
+
         InfoButton{
             id: iebutton
             valueCenter: "1"
@@ -68,6 +73,9 @@ Rectangle {
             lowLimit: 0.5
             upLimit: 2
             stepConfig: 0.1
+            onValueCenterChanged: {
+                if(waitingComponent) writeDataControl()
+            }
         }
         InfoButton{
             id: fbutton
@@ -78,6 +86,9 @@ Rectangle {
             lowLimit: 5
             upLimit: 40
             stepConfig: 1
+            onValueCenterChanged: {
+                if(waitingComponent) writeDataControl()
+            }
         }
         InfoButton{
             id: peepbutton
@@ -88,6 +99,9 @@ Rectangle {
             lowLimit: 5
             upLimit: 20
             stepConfig: 1
+            onValueCenterChanged: {
+               if(waitingComponent) writeDataControl()
+            }
         }
         InfoButton{
             id: pipbutton
@@ -98,6 +112,9 @@ Rectangle {
             lowLimit: 20
             upLimit: 40
             stepConfig: 1
+            onValueCenterChanged: {
+               if(waitingComponent) writeDataControl()
+            }
         }
         InfoButton{
             id: supbutton
@@ -108,6 +125,9 @@ Rectangle {
             lowLimit: 0
             upLimit: 100
             stepConfig: 10
+            onValueCenterChanged: {
+                if(waitingComponent) writeDataControl()
+            }
         }
     }
 
@@ -124,9 +144,11 @@ Rectangle {
             buttonStatus: true
             buttonName: "A/VC"
             onClicked: {
+                currentMode = 0
                 buttonStatus = !buttonStatus
                 acbutton.buttonStatus = false
                 cpapbutton.buttonStatus = false
+                writeDataControl()
             }
         }
         ModeButton{
@@ -134,9 +156,11 @@ Rectangle {
             buttonStatus: false
             buttonName: "SIMV+PS"
             onClicked: {
+                currentMode = 1
                 buttonStatus = !buttonStatus
                 cmvbutton.buttonStatus = false
                 cpapbutton.buttonStatus = false
+                writeDataControl()
             }
         }
         ModeButton{
@@ -144,9 +168,11 @@ Rectangle {
             buttonStatus: false
             buttonName: "PRVC"
             onClicked: {
+                currentMode = 2
                 buttonStatus = !buttonStatus
                 acbutton.buttonStatus = false
                 cmvbutton.buttonStatus = false
+                writeDataControl()
             }
         }
     }
@@ -157,7 +183,20 @@ Rectangle {
         anchors.rightMargin: 30
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 15
+        onButtonStatusChanged: {
+            /*if(serialControl)*/ serialData1.startStopVent(buttonStatus)
+            /*else*/ serialData2.startStopVent(buttonStatus)
+        }
 
     }
+    function writeDataControl(){
+        if(serialControl) serialData1.writeParameter(currentMode,vtbutton.valueCenter*1,iebutton.valueCenter*1000,
+                                                     fbutton.valueCenter*1,peepbutton.valueCenter*1,
+                                                     pipbutton.valueCenter*1,supbutton.valueCenter*1)
+        else serialData2.writeParameter(currentMode,vtbutton.valueCenter*1,iebutton.valueCenter*1000,
+                                        fbutton.valueCenter*1,peepbutton.valueCenter*1,
+                                        pipbutton.valueCenter*1,supbutton.valueCenter*1)
+    }
+    Component.onCompleted: waitingComponent = true
 
 }

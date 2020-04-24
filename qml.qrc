@@ -82,5 +82,7 @@
         <file>GenderButton.qml</file>
         <file>images/check_white_18dp.png</file>
         <file>GeneralButton.qml</file>
+        <file>SerialSetting1.qml</file>
+        <file>SerialSetting2.qml</file>
     </qresource>
 </RCC>

@@ -11,6 +11,7 @@ Rectangle {
     border.width: 1
     property alias title: titleText.text
     property alias patientInfor: textname.text
+    property alias patientFocus: textname.focus
 
 
     Text {

@@ -5,7 +5,8 @@
 #include <QTimer>
 
 #include "datasource.h"
-#include "serialdatasource.h"
+//#include "serialdatasource.h"
+#include "chartdatasource.h"
 
 #define DEFAULT_INTERVAL 100
 
@@ -13,7 +14,7 @@ class DataSinkSerial : public QObject
 {
     Q_OBJECT
 public:
-   DataSinkSerial(SerialDataSource *src, DataSource * target);
+   DataSinkSerial(ChartDataSource *src, DataSource * target);
 
 signals:
 
@@ -26,7 +27,7 @@ public slots:
 
 private:
     DataSource          *_target;
-    SerialDataSource    *_source;
+    ChartDataSource     *_source;
 
     QTimer              *_timer;
 

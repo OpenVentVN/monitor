@@ -94,7 +94,7 @@ SampleDataSource::SampleDataSource()
               }
 
               count++;
-              qDebug() << "Count = " << count << "," << sensorDataTimeString.toInt() - lastmsTime;
+//              qDebug() << "Count = " << count << "," << sensorDataTimeString.toInt() - lastmsTime;
 
               // qDebug() << lastmsTime;
 
