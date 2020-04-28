@@ -83,7 +83,7 @@ public:
     Q_INVOKABLE     int         getTotalPortsCount();
     Q_INVOKABLE     void        updateComportSettings(QString portname_str);
     Q_INVOKABLE     QString     getPortName(int idx);
-    bool                        isConnected()const ;
+    Q_INVOKABLE     bool        isConnected() ;
 
     Q_SLOT void readData();
 
@@ -101,6 +101,7 @@ signals:
     void m_is_port_list_updated_changed();
     void m_is_connected_changed(bool state);
     void m_type_uart_sensor();
+    void m_read_data_vent(int _mode, int _vt, int _ti, int _f, int _peep, int _pip, int _ps);
 
 
 private slots:
@@ -108,7 +109,7 @@ private slots:
     void        portAddedRemoved();
     void        updatePortStatus(bool connection_state);
 
-    void        writeDataToSerial(unsigned char *_data);
+    void        writeDataToSerial(unsigned char *_data, int _length);
 
     unsigned short crc16(unsigned char *buffer, int buffer_length);
 

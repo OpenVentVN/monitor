@@ -60,7 +60,7 @@ Rectangle {
             upLimit: 800
             stepConfig: 10
             onValueCenterChanged: {
-                if(waitingComponent) writeDataControl()
+                if(waitingComponent && writeParameterFlag) writeDataControl()
             }
         }
 
@@ -74,7 +74,7 @@ Rectangle {
             upLimit: 2
             stepConfig: 0.1
             onValueCenterChanged: {
-                if(waitingComponent) writeDataControl()
+                if(waitingComponent && writeParameterFlag) writeDataControl()
             }
         }
         InfoButton{
@@ -87,7 +87,7 @@ Rectangle {
             upLimit: 40
             stepConfig: 1
             onValueCenterChanged: {
-                if(waitingComponent) writeDataControl()
+                if(waitingComponent && writeParameterFlag) writeDataControl()
             }
         }
         InfoButton{
@@ -100,7 +100,7 @@ Rectangle {
             upLimit: 20
             stepConfig: 1
             onValueCenterChanged: {
-               if(waitingComponent) writeDataControl()
+               if(waitingComponent && writeParameterFlag) writeDataControl()
             }
         }
         InfoButton{
@@ -113,7 +113,7 @@ Rectangle {
             upLimit: 40
             stepConfig: 1
             onValueCenterChanged: {
-               if(waitingComponent) writeDataControl()
+               if(waitingComponent && writeParameterFlag) writeDataControl()
             }
         }
         InfoButton{
@@ -126,7 +126,7 @@ Rectangle {
             upLimit: 100
             stepConfig: 10
             onValueCenterChanged: {
-                if(waitingComponent) writeDataControl()
+                if(waitingComponent && writeParameterFlag) writeDataControl()
             }
         }
     }
@@ -184,8 +184,8 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 15
         onButtonStatusChanged: {
-            /*if(serialControl)*/ serialData1.startStopVent(buttonStatus)
-            /*else*/ serialData2.startStopVent(buttonStatus)
+            if(serialControl) serialData1.startStopVent(buttonStatus)
+            else serialData2.startStopVent(buttonStatus)
         }
 
     }
@@ -197,6 +197,53 @@ Rectangle {
                                         fbutton.valueCenter*1,peepbutton.valueCenter*1,
                                         pipbutton.valueCenter*1,supbutton.valueCenter*1)
     }
-    Component.onCompleted: waitingComponent = true
+    Component.onCompleted: {
+        waitingComponent = true
+    }
+
+    Connections{
+        target: serialData1
+        onM_read_data_vent:{
+            currentMode = _mode
+            vtbutton.valueCenter = _vt.toString()
+            iebutton.valueCenter = (_ti/1000).toFixed(1).toString()
+            fbutton.valueCenter = _f.toString()
+            peepbutton.valueCenter = _peep.toString()
+            pipbutton.valueCenter = _pip.toString()
+            supbutton.valueCenter = _ps.toString()
+        }
+    }
+    Connections{
+        target: serialData2
+        onM_read_data_vent:{
+            writeParameterFlag = false
+            currentMode = _mode
+            vtbutton.valueCenter = _vt.toString()
+            iebutton.valueCenter = (_ti/1000).toFixed(1).toString()
+            fbutton.valueCenter = _f.toString()
+            peepbutton.valueCenter = _peep.toString()
+            pipbutton.valueCenter = _pip.toString()
+            supbutton.valueCenter = _ps.toString()
+            set_current_mode()
+        }
+    }
+
+    function set_current_mode(){
+        if(currentMode == 0){
+            cmvbutton.buttonStatus = true
+            acbutton.buttonStatus = false
+            cpapbutton.buttonStatus = false
+        }
+        else if(currentMode == 1){
+            acbutton.buttonStatus = true
+            cmvbutton.buttonStatus = false
+            cpapbutton.buttonStatus = false
+        }
+        else if(currentMode == 2){
+            cpapbutton.buttonStatus = true
+            acbutton.buttonStatus = false
+            cmvbutton.buttonStatus = false
+        }
+    }
 
 }

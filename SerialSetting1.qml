@@ -9,12 +9,14 @@ Item {
             reconnectSerial.running = true
         }
         onM_is_connected_changed:{
-            if(serialData1.isConnected) {
+//            if(serialData1.isConnected) {
                 //connected
-            }
-            else{
+                //read current config
+//            if(state) serialData1.readParameter()
+//            }
+//            else{
                 //disconnected
-            }
+//            }
         }
     }
     Timer{
@@ -24,7 +26,6 @@ Item {
         onTriggered: {
             if(!serialData1.isConnected){
                 connect_to_serial()
-                console.log("kkkkkkkkkkkkkkk")
             }
 
         }
@@ -36,22 +37,32 @@ Item {
          onTriggered: {
              check_and_set_current_port()
              connect_to_serial()
-             console.log("here")
 
          }
      }
+
+    Timer{
+         id: getCurrentParameterTimer
+         interval: 2000;  repeat: false   // run once at start up
+         running: false
+         onTriggered: {
+             serialData1.readParameter()
+         }
+     }
+
     function connect_to_serial(){
         if(listSerial.count > 0){
-            if(!serialData1.isConnected){       // if port is being closed, can update port name
+            if(!serialData1.isConnected()){       // if port is being closed, can update port name
                 serialData1.updateComportSettings(listSerial.get(0).portname);
                 console.log("abc ",listSerial.get(0).portname)
             }
             serialData1.openCloseComport();
-            if(serialData1.isConnected) {
+            if(serialData1.isConnected()) {
                 console.log("qml serial connected")
+                getCurrentParameterTimer.running = true
             }
             else{
-                console.log("qml serial connected")
+                console.log("qml serial disconnected")
 
             }
             s_connect_serial_2();

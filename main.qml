@@ -17,6 +17,7 @@ ApplicationWindow {
 
     property int currentMode: 1
     property bool serialControl: true // true: sensor uart, false: control uart, default uart 1 is control, uart 2 is sensor
+    property bool writeParameterFlag: false
 
     signal s_config_changed(int _id, double _value)
     signal s_updated_ie_param_flag()

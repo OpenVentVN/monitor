@@ -55,6 +55,7 @@ Popup {
                 text: "YES"
                 textColor: "#4a4a4a"
                 onClicked: {
+                    writeParameterFlag = true
                     s_config_changed(buttonID,slider.value)
                     s_updated_ie_param_flag();
                     puconfig.close()

@@ -33,17 +33,22 @@ Rectangle {
             color: "#f15a22"
             opacity: 0.8
             anchors.left: parent.left; anchors.leftMargin: slider.border.width/2
+            onWidthChanged: {
+                handle.x = (value - lowerLimit)*convertRatio - handleOffsetX
+            }
         }
     }
 
     Item {
         id: handle
-        height:  25 ; width: 25; anchors.top: grooveRect.bottom;
+        height:  40 ; width: 40; anchors.top: grooveRect.bottom;
         x: fillRect.width - handleOffsetX
         Image{
             id: handleReleasedImage
             asynchronous: true
-            anchors.fill: parent
+            height:  30 ; width: 30;
+//            anchors.fill: parent
+            anchors.horizontalCenter: parent.horizontalCenter
             source: handleNormal
         }
         Image{
@@ -99,6 +104,7 @@ Rectangle {
             onPressed: { handlePressedImage.state  = "focus"
             }
             onReleased: {
+//                handle.x = (value - lowerLimit)*convertRatio - handleOffsetX
                 handlePressedImage.state = "normal"
             }
             onEntered: handleReleasedImage.source = handlePressed
@@ -117,12 +123,13 @@ Rectangle {
                         value = (value - value%step).toFixed(fixedData)
                     }
                     handle.x = (value - lowerLimit)*convertRatio - handleOffsetX
-
                 }
             }
         }
 
     }
+
+
     Text {
         id: textcurrent
         text: value.toString()

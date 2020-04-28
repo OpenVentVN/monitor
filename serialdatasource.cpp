@@ -27,18 +27,48 @@ SerialDataSource::SerialDataSource()
 
 void SerialDataSource::processLine(const QByteArray &line)
 {
-    qDebug() << "data sensor "<<line;
-    QString data_sensor = QString(line);
-    data_sensor.remove("\r\n");
-    QStringList data_process;
-    data_process = data_sensor.split(',');
+    qDebug() << "data sensor "<<line << line.toHex() << line.toHex().length();
+    if(line.toHex().length() == 32){
+        //control buffer responsed 16 bytes
+        //01680100090101f403e8140a150aaa16
 
-    if(data_process.size() == 5){
-        emit m_update_data_pressure(data_process.at(3).toLong());
-        if(_run_on_start){
-            emit m_type_uart_sensor();
+        QString dataHex = line.toHex();
+        bool ok = false;
+        QString hexcommand = dataHex.mid(2,2);
+        if(hexcommand.toInt(&ok,16) == 104 || hexcommand.toInt(&ok,16) == 103){
+            // responsed when write or read command
+
+            int _mode = dataHex.mid(10,2).toInt(&ok,16);
+
+            int _vt_hi = dataHex.mid(12,2).toInt(&ok,16);
+            int _vt_lo = dataHex.mid(14,2).toInt(&ok,16);
+            int _vt = ((_vt_hi << 8) | _vt_lo);
+
+            int _ti_hi = dataHex.mid(16,2).toInt(&ok,16);
+            int _ti_lo = dataHex.mid(18,2).toInt(&ok,16);
+            int _ti = ((_ti_hi << 8) | _ti_lo);
+
+            int _f =  dataHex.mid(20,2).toInt(&ok,16);
+            int _peep =  dataHex.mid(22,2).toInt(&ok,16);
+            int _pip =  dataHex.mid(24,2).toInt(&ok,16);
+            int _ps =  dataHex.mid(26,2).toInt(&ok,16);
+            emit m_read_data_vent(_mode,_vt,_ti,_f,_peep,_pip,_ps);
+   //unsigned char _mode, int _vt, int _ti, unsigned char _f, unsigned char _peep, unsigned char _pip, unsigned char _ps
+
         }
-//        _pressure_data_y =  data_process.at(3).toLong() ;
+    }
+    else{
+        QString data_sensor = QString(line);
+        data_sensor.remove("\r\n");
+        QStringList data_process;
+        data_process = data_sensor.split(',');
+
+        if(data_process.size() == 5){
+            emit m_update_data_pressure(data_process.at(3).toLong());
+            if(_run_on_start){
+                emit m_type_uart_sensor();
+            }
+        }
     }
 
 
@@ -100,8 +130,8 @@ void SerialDataSource::startStopVent(bool _stt)
         unsigned char crchi = crc >> 8;
         unsigned char crclo = crc;
         unsigned char packet_start[]= {0x01,functionID,_tran_id,0x00,0x00,crchi,crclo};
-        m_serial_port->write(QByteArray((char *) packet_start,sizeof (packet_start)));
-//        writeDataToSerial(packet_start);
+
+        writeDataToSerial(packet_start,sizeof (packet_start));
     }
     else{
         unsigned char functionID = 102;
@@ -110,9 +140,8 @@ void SerialDataSource::startStopVent(bool _stt)
         unsigned char crchi = crc >> 8;
         unsigned char crclo = crc;
         unsigned char packet_stop[]= {0x01,functionID,_tran_id,0x00,0x00,crchi,crclo};
-        m_serial_port->write(QByteArray((char *) packet_stop,sizeof (packet_stop)));
 
-//        writeDataToSerial(packet_stop);
+        writeDataToSerial(packet_stop,sizeof (packet_stop));
 
     }
     _tran_id ++;
@@ -127,17 +156,17 @@ void SerialDataSource::readParameter()
     unsigned char crchi = crc >> 8;
     unsigned char crclo = crc;
     unsigned char packet[]= {0x01,functionID,_tran_id,0x00,0x00,crchi,crclo};
-    m_serial_port->write(QByteArray((char *) packet,sizeof (packet)));
 
-//    writeDataToSerial(packet);
+    writeDataToSerial(packet,sizeof (packet));
     _tran_id ++;
     if(_tran_id == 0) _tran_id = 1;
+    qDebug() << "read current parameter";
 }
 
 void SerialDataSource::writeParameter(unsigned char _mode, int _vt, int _ti, unsigned char _f, unsigned char _peep,
                                       unsigned char _pip, unsigned char _ps)
 {
-    qDebug() << _mode << _vt << _ti << _f << _peep << _pip << _ps;
+//    qDebug() << _mode << _vt << _ti << _f << _peep << _pip << _ps;
     unsigned char vthi = _vt >> 8;
     unsigned char vtlo = _vt;
 
@@ -150,9 +179,8 @@ void SerialDataSource::writeParameter(unsigned char _mode, int _vt, int _ti, uns
     unsigned char crchi = crc >> 8;
     unsigned char crclo = crc;
     unsigned char packet[]= {0x01,functionID,_tran_id,0x00,0x09,_mode,vthi,vtlo,tihi,tilo,_f,_peep,_pip,_ps,crchi,crclo};
-    m_serial_port->write(QByteArray((char *) packet,sizeof (packet)));
 
-//    writeDataToSerial(packet);
+    writeDataToSerial(packet,sizeof (packet));
     _tran_id ++;
     if(_tran_id == 0) _tran_id = 1;
 }
@@ -170,8 +198,10 @@ QString SerialDataSource::getPortName(int idx)
     else {return "NA";}
 }
 
-bool SerialDataSource::isConnected() const
+bool SerialDataSource::isConnected()
 {
+    qDebug() << "isConnected" << _connection_state;
+
     return _connection_state;
 }
 
@@ -228,13 +258,14 @@ void SerialDataSource::updatePortStatus(bool connection_state)
 {
     _connection_state = connection_state;
     emit m_is_connected_changed(_connection_state);
+    qDebug() << "_connection_state " << _connection_state;
 //    emit m_is_port_list_updated_changed();
 }
 
-void SerialDataSource::writeDataToSerial(unsigned char *_data)
+void SerialDataSource::writeDataToSerial(unsigned char *_data, int _length)
 {
     if(m_serial_port->isOpen()){
-        m_serial_port->write(QByteArray((char *) _data,sizeof (_data)));
+        m_serial_port->write(QByteArray((char *) _data, _length));
 
         qDebug () << "write data to serial port";
     }
@@ -255,7 +286,7 @@ unsigned short SerialDataSource::crc16(unsigned char *buffer, int buffer_length)
         crc_hi = crc_lo ^ table_crc_hi[i];
         crc_lo = table_crc_lo[i];
     }
-    qDebug() << "crc low " << crc_lo << "crc hi " << crc_hi;
+//    qDebug() << "crc low " << crc_lo << "crc hi " << crc_hi;
 
 
     return (crc_hi << 8 | crc_lo);
