@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>data/TEST_V800T1000F15.txt</file>
+    </qresource>
+</RCC>

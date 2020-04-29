@@ -52,6 +52,8 @@ private:
     QQuickView *m_appViewer;
 
     QVector<QPointF> m_pressureData;
+    QVector<QPointF> m_pressureDataTmp;
+
     QVector<QPointF> m_volumnData;
     QVector<QPointF> m_flowData;
 

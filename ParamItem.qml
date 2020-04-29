@@ -8,34 +8,38 @@ Item {
     property string dspDv: "ml"
 
 
-    width: 150
+    width: 100
     height: 100
 
     ColumnLayout {
         spacing: 8
-        Layout.fillHeight: true
+        anchors.horizontalCenter: parent.horizontalCenter
+//        Layout.fillHeight: true
 
         Text {
             text: paramDisplay.dspText
-            font.pointSize: 12
+            font.pixelSize: 12
             color: "#ffffff"
 
-            Layout.alignment: Qt.AlignCenter
+//            Layout.alignment: Qt.AlignCenter
+            horizontalAlignment: Text.AlignHCenter
         }
 
         Text {
             id: value
             text: paramDisplay.dspValue
-            font.pointSize: 32
+            font.pixelSize: 20
             color: "#ffffff"
+            horizontalAlignment: Text.AlignHCenter
         }
 
         Text {
             text: paramDisplay.dspDv
-            font.pointSize: 12
+            font.pixelSize: 12
             color: "#ffffff"
 
-            Layout.alignment: Qt.AlignCenter
+//            Layout.alignment: Qt.AlignCenter
+            horizontalAlignment: Text.AlignHCenter
         }
     }
 

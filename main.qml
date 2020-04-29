@@ -2,69 +2,65 @@ import QtQuick 2.0
 import QtQuick.Controls 2.1
 import QtQuick.Controls.Material 2.1
 import QtQuick.Layouts 1.0
+import QtQuick.Window 2.2
+import QtQuick.Window 2.2
+import QtQuick.VirtualKeyboard 2.1
+import QtQuick.VirtualKeyboard.Settings 2.1
 
-Item {
-    id: main
+ApplicationWindow {
+    id: mainwindown
     visible: true
-
+    width: 800
+    height: 480
     Material.theme: Material.Dark
     Material.accent: Material.Purple
 
-    RowLayout {
-        spacing: 2
+    property int currentMode: 1
+    property bool serialControl: true // true: sensor uart, false: control uart, default uart 1 is control, uart 2 is sensor
+    property bool writeParameterFlag: false
+
+    signal s_config_changed(int _id, double _value)
+    signal s_updated_ie_param_flag()
+    signal s_updated_ie_param_start(int _f)
+    signal s_updated_patient_info(string _fname, string _lname, bool _gender, string _age, string _high, string _weight)
+
+    signal s_connect_serial_2();
+
+    HomeView{
+        id: homepage
         anchors.fill: parent
+    }
 
-        // left panel
-        ControlPanel {
-            id: controlPanel
-            Layout.alignment: Qt.AlignTop
-            Layout.preferredWidth: 200
-            Layout.margins: 10.0
-       }
+    ConfigPopup{
+        id: puconfig
+    }
 
-        // two views
-        Item {
-            id: viewPadding
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+    PatientInfoPopup{
+        id: pupatient
+        visible: false
+    }
 
-            ColumnLayout {
-                spacing: 2
-                anchors.fill: parent
+    ListModel{
+        id: listSerial
+    }
+    SerialSetting1{
+        id: serial1
+    }
+    SerialSetting2{
+        id: serial2
+    }
 
-                VentParamView {
-                    id: paramViewer
+    Connections{
+        target: serialData1
+        onM_type_uart_sensor:{
+            serialControl = false
+        }
+    }
 
-                    Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignTop
-                }
-
-                ColumnLayout {
-                    spacing: 2
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-
-                    VentGraphicViewPressure {
-                        id: pressureView
-                        visible: true
-
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-                    }
-
-                    VentGraphicViewVolumn {
-                        id: flowView
-                        visible: false
-
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-
-                        Component.onCompleted: {
-                                console.log("VentGraphicViewVolumn height: ", flowView.height)
-                            }
-                    }
-                }
-            }
+    Connections{
+        target: serialData2
+        onM_type_uart_sensor:{
+            serialControl = true
         }
     }
 

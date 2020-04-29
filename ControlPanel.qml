@@ -1,4 +1,4 @@
-import QtQuick 2.1
+import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Extras 1.4
@@ -33,7 +33,7 @@ ColumnLayout {
 
     Text {
         text: "OpenVENT"
-        font.pointSize: 18
+        font.pixelSize: 18
         color: "white"
     }
 

@@ -9,7 +9,13 @@ import QtCharts 2.1
 //![1]
 ChartView {
     id: pressureChartView
-    theme: ChartView.ChartThemeDark
+    width: 650
+    height: 400
+//    theme: ChartView.ChartThemeDark
+    backgroundColor: "black"
+//    titleColor: "red"
+    legend.labelColor: "white"
+
     property string serieName: "Pressure"
 
     ValueAxis {
@@ -17,15 +23,20 @@ ChartView {
         min: -10
         max: 40
         tickCount: 6
+        labelsColor: "#FFFFFF"
+        gridLineColor: "#424242"
+
     }
 
     ValueAxis {
         id: axisX
         min: 0
-        max: 15
+        max: 16
 
-        gridVisible:false
-        tickCount: 16
+//        gridVisible:false
+        tickCount: 9
+        labelsColor: "#FFFFFF"
+        gridLineColor: "#424242"
     }
 
     SplineSeries {
@@ -34,8 +45,7 @@ ChartView {
         axisX: axisX
         axisY: axisY1
         useOpenGL: true
-
-        width: 5
+        width: 3
         color: "#FFFFFF"
     }
 

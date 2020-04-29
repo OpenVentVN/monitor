@@ -8,5 +8,81 @@
         <file>VentParamView.qml</file>
         <file>ParamItem.qml</file>
         <file>VentGraphicViewVolumn.qml</file>
+        <file>PatientInfoInput.qml</file>
+        <file>HomeView.qml</file>
+        <file>InfoButton.qml</file>
+        <file>PatientInforLabel.qml</file>
+        <file>ModeButton.qml</file>
+        <file>images/btnedit-_hover.png</file>
+        <file>images/btnedit-_hover@2x.png</file>
+        <file>images/btnedit-_hover@3x.png</file>
+        <file>images/btnedit+_hover.png</file>
+        <file>images/btnedit+_hover@2x.png</file>
+        <file>images/btnedit+_hover@3x.png</file>
+        <file>images/btnedit-_normal.png</file>
+        <file>images/btnedit-_normal@2x.png</file>
+        <file>images/btnedit-_normal@3x.png</file>
+        <file>images/btnedit+_normal.png</file>
+        <file>images/btnedit+_normal@2x.png</file>
+        <file>images/btnedit+_normal@3x.png</file>
+        <file>images/btn_hover.png</file>
+        <file>images/btn_hover@2x.png</file>
+        <file>images/btn_hover@3x.png</file>
+        <file>images/btn_normal.png</file>
+        <file>images/btn_normal@2x.png</file>
+        <file>images/btn_normal@3x.png</file>
+        <file>images/close_hover.png</file>
+        <file>images/close_hover@2x.png</file>
+        <file>images/close_hover@3x.png</file>
+        <file>images/close_normal.png</file>
+        <file>images/close_normal@2x.png</file>
+        <file>images/close_normal@3x.png</file>
+        <file>images/icon_female.png</file>
+        <file>images/icon_female@2x.png</file>
+        <file>images/icon_female@3x.png</file>
+        <file>images/icon_female_white.png</file>
+        <file>images/icon_female_white@2x.png</file>
+        <file>images/icon_female_white@3x.png</file>
+        <file>images/icon-_hover.png</file>
+        <file>images/icon-_hover@2x.png</file>
+        <file>images/icon-_hover@3x.png</file>
+        <file>images/icon+_hover.png</file>
+        <file>images/icon+_hover@2x.png</file>
+        <file>images/icon+_hover@3x.png</file>
+        <file>images/icon_male.png</file>
+        <file>images/icon_male@2x.png</file>
+        <file>images/icon_male@3x.png</file>
+        <file>images/icon_male_white.png</file>
+        <file>images/icon_male_white@2x.png</file>
+        <file>images/icon_male_white@3x.png</file>
+        <file>images/icon-_normal.png</file>
+        <file>images/icon-_normal @2x.png</file>
+        <file>images/icon-_normal @3x.png</file>
+        <file>images/icon+_normal.png</file>
+        <file>images/icon+_normal@2x.png</file>
+        <file>images/icon+_normal@3x.png</file>
+        <file>images/icon_triangle.png</file>
+        <file>images/icon_triangle@2x.png</file>
+        <file>images/icon_triangle@3x.png</file>
+        <file>images/mode.png</file>
+        <file>images/mode@2x.png</file>
+        <file>images/mode@3x.png</file>
+        <file>images/mode_hover.png</file>
+        <file>images/mode_hover@2x.png</file>
+        <file>images/mode_hover@3x.png</file>
+        <file>StartButton.qml</file>
+        <file>ConfigPopup.qml</file>
+        <file>SliderConfig.qml</file>
+        <file>images/icon_triangle_hover.png</file>
+        <file>ImageButtonEdit.qml</file>
+        <file>FlatButton.qml</file>
+        <file>PaperShadow.qml</file>
+        <file>PaperRipple.qml</file>
+        <file>PatientInfoPopup.qml</file>
+        <file>GenderButton.qml</file>
+        <file>images/check_white_18dp.png</file>
+        <file>GeneralButton.qml</file>
+        <file>SerialSetting1.qml</file>
+        <file>SerialSetting2.qml</file>
     </qresource>
 </RCC>

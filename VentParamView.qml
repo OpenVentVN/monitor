@@ -11,9 +11,9 @@ import QtQuick.Layouts 1.0
     6. FiO2
  */
 
-RowLayout {
+Row {
     spacing: 2
-    anchors.fill: parent
+//    anchors.fill: parent
 
     ParamItem {
         id: paramVT

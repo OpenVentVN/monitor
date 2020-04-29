@@ -58,7 +58,7 @@ SampleDataSource::SampleDataSource()
     _internalVolumnCounter = 0;
 
 
-    QFile inputFile("/home/compiler/openvent/Software/OVentControl/OventMonitor/data/TEST_V800T1000F15.txt");
+    QFile inputFile("://data/TEST_V800T1000F15.txt");
 
     if (inputFile.open(QIODevice::ReadOnly))
     {
@@ -94,7 +94,7 @@ SampleDataSource::SampleDataSource()
               }
 
               count++;
-              qDebug() << "Count = " << count << "," << sensorDataTimeString.toInt() - lastmsTime;
+//              qDebug() << "Count = " << count << "," << sensorDataTimeString.toInt() - lastmsTime;
 
               // qDebug() << lastmsTime;
 
@@ -133,7 +133,7 @@ QPointF SampleDataSource::getPressureData()
 
 
     if (_internalPressureCounter >= 150)
-        _internalPressureCounter = 0;
+        _internalPressureCounter = 150;
 
     return pressureSensorData.at(_internalPressureCounter++);
 

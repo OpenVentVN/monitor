@@ -19,19 +19,20 @@ Item {
         id: buttonText
         width: parent.width
         height: parent.height
+        text: button.text + button.items[currentSelection]
 
-        style: ButtonStyle {
-            label: Component {
-                Text {
-                    text: button.text + button.items[currentSelection]
-                    clip: true
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    anchors.fill: parent
-                }
-            }
-        }
+//        style: ButtonStyle {
+//            label: Component {
+//                Text {
+//                    text: button.text + button.items[currentSelection]
+//                    clip: true
+//                    wrapMode: Text.WordWrap
+//                    verticalAlignment: Text.AlignVCenter
+//                    horizontalAlignment: Text.AlignHCenter
+//                    anchors.fill: parent
+//                }
+//            }
+//        }
         onClicked: {
             currentSelection = (currentSelection + 1) % items.length;
             selectionChanged(button.items[currentSelection]);
