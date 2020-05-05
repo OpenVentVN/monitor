@@ -27,7 +27,7 @@ SerialDataSource::SerialDataSource()
 
 void SerialDataSource::processLine(const QByteArray &line)
 {
-    qDebug() << "data sensor "<<line << line.toHex() << line.toHex().length();
+    qDebug() << "data read "<<line << line.toHex() << line.toHex().length();
     if(line.toHex().length() == 32){
         //control buffer responsed 16 bytes
         //01680100090101f403e8140a150aaa16

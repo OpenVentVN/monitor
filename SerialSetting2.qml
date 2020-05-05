@@ -25,7 +25,7 @@ Item {
 
     Timer{
          id: getCurrentParameterTimer
-         interval: 2000;  repeat: false   // run once at start up
+         interval: 3000;  repeat: false   // run once at start up
          running: false
          onTriggered: {
              serialData2.readParameter()

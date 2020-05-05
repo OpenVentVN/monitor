@@ -24,7 +24,7 @@ Item {
         interval: 1000;  repeat: false   // run once at start up
         running: false
         onTriggered: {
-            if(!serialData1.isConnected){
+            if(!serialData1.isConnected()){
                 connect_to_serial()
             }
 
@@ -43,7 +43,7 @@ Item {
 
     Timer{
          id: getCurrentParameterTimer
-         interval: 2000;  repeat: false   // run once at start up
+         interval: 3000;  repeat: false   // run once at start up
          running: false
          onTriggered: {
              serialData1.readParameter()
